@@ -2,92 +2,168 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
+from product_api import (
+    search_products,
+    analyze_products
+)
+
 
 app = FastAPI(
+
     title="SaveGo AI V7.1",
-    description="智能比价购物助手"
+
+    description="智能比价购物助手",
+
+    version="7.1"
+
 )
 
 
-# 允许前端访问
+
+# ==========================
+# 跨域设置
+# ==========================
+
 app.add_middleware(
+
     CORSMiddleware,
+
     allow_origins=["*"],
+
+    allow_credentials=True,
+
     allow_methods=["*"],
+
     allow_headers=["*"]
+
 )
 
+
+
+# ==========================
+# 数据模型
+# ==========================
 
 class ProductRequest(BaseModel):
-    product:str
+
+    product: str
 
 
+
+# ==========================
+# 首页检测
+# ==========================
 
 @app.get("/")
 def home():
 
     return {
+
         "name":"SaveGo AI",
+
         "version":"V7.1",
-        "status":"running"
+
+        "status":"running",
+
+        "message":"智能购物助手在线"
+
     }
 
 
+
+# ==========================
+# 商品搜索接口
+# ==========================
 
 @app.post("/search")
 def search_product(
-    req:ProductRequest
+
+    req: ProductRequest
+
 ):
 
-    product=req.product
+
+    # 获取商品数据
+
+    products = search_products(
+
+        req.product
+
+    )
 
 
-    # 当前模拟AI评分
-    # 后续接真实商品API
+    # AI分析
 
-    result={
+    result = analyze_products(
 
-        "product":product,
+        products
 
-        "score":92,
-
-        "price_analysis":{
-
-            "lowest_price":"¥6999",
-
-            "platforms":[
-                "京东",
-                "淘宝",
-                "拼多多"
-            ]
-
-        },
+    )
 
 
-        "recommendation":
-        "价格合理，建议购买"
+    return {
+
+
+        "query":
+
+        req.product,
+
+
+        "result":
+
+        result
 
 
     }
 
 
-    return result
 
-
-
+# ==========================
+# AI助手接口
+# ==========================
 
 @app.get("/ai")
-def ai():
+def ai_assistant():
+
 
     return {
 
-        "assistant":
-        "SaveGo AI购物助手已上线",
 
-        "features":[
+        "assistant":
+
+        "SaveGo AI购物助手",
+
+
+        "version":
+
+        "V7.1",
+
+
+        "functions":[
+
+            "商品搜索",
+
             "价格比较",
-            "商品评分",
-            "降价提醒"
+
+            "智能评分",
+
+            "购买建议"
+
         ]
+
+    }
+
+
+
+# ==========================
+# 健康检测
+# ==========================
+
+@app.get("/health")
+def health():
+
+    return {
+
+        "status":"ok"
 
     }
