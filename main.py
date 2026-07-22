@@ -239,3 +239,40 @@ def ai_assistant():
         "message": "你好，我可以帮助你分析商品价格和推荐购买方案"
 
     }
+# =====================
+# AI 商品分析 V7.3
+# =====================
+
+
+@app.get("/analysis")
+def product_analysis(keyword: str):
+
+
+    analysis = {
+
+        "level": "推荐购买",
+
+        "summary":
+        f"{keyword} 当前价格稳定，综合性能和价格适合购买",
+
+
+        "tips": [
+
+            "建议比较不同平台价格",
+
+            "关注优惠券和促销活动",
+
+            "根据使用需求选择配置"
+
+        ]
+
+    }
+
+
+    return {
+
+        "keyword": keyword,
+
+        "analysis": analysis
+
+    }
