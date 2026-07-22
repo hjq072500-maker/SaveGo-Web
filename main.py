@@ -1,80 +1,72 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 
 app = FastAPI(
-    title="SaveGo AI API V7.0"
+    title="SaveGo AI V7.0",
+    description="智能比价购物助手"
 )
 
 
+# 允许前端访问
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 
-products = [
+class ProductRequest(BaseModel):
+    keyword:str
 
-{
-"name":"iPhone 16 Pro",
-"price":7499,
-"score":92,
-"platform":"3个平台比较"
-},
-
-{
-"name":"MacBook Air M4",
-"price":8999,
-"score":95,
-"platform":"4个平台比较"
-},
-
-{
-"name":"小米手机",
-"price":2999,
-"score":88,
-"platform":"5个平台比较"
-}
-
-]
 
 
 @app.get("/")
 def home():
 
     return {
-        "status":"SaveGo AI V7.0运行正常"
+        "message":"SaveGo AI V7.0 后端运行成功"
     }
 
 
 
-@app.get("/search")
-def search(keyword:str):
+@app.post("/search")
+def search_product(
+        data:ProductRequest
+):
 
-    result=[]
-
-    for item in products:
-
-        if keyword.lower() in item["name"].lower():
-
-            result.append(item)
+    keyword=data.keyword
 
 
     return {
-        "keyword":keyword,
-        "count":len(result),
-        "data":result
+
+        "product":keyword,
+
+        "score":92,
+
+        "price":7499,
+
+        "platforms":[
+            "京东",
+            "淘宝",
+            "亚马逊"
+        ],
+
+        "advice":
+        "建议比较价格后购买"
+
     }
 
 
 
-@app.get("/recommend")
-def recommend():
+@app.get("/ai")
+def ai_assistant():
 
-    return sorted(
-        products,
-        key=lambda x:x["score"],
-        reverse=True
-    )
+    return {
+
+        "assistant":
+        "SaveGo AI购物助手已上线"
+
+    }
