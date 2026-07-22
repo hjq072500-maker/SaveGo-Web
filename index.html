@@ -1,76 +1,219 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>SaveGo V6.2 数据智能版</title>
 
+
 <style>
 
-body{
-font-family:Arial,"Microsoft YaHei";
-background:#f3f6fb;
-margin:0;
-padding-bottom:70px;
+*{
+box-sizing:border-box;
 }
+
+
+body{
+
+font-family:
+Arial,
+"Microsoft YaHei";
+
+background:#f3f6fb;
+
+margin:0;
+
+padding-bottom:80px;
+
+}
+
+
 
 header{
+
 background:#111827;
+
 color:white;
-padding:25px;
+
+padding:35px 20px;
+
 text-align:center;
+
 }
+
+
+
+header h1{
+
+font-size:32px;
+
+margin:10px;
+
+}
+
+
+
+header p{
+
+font-size:18px;
+
+}
+
+
 
 .search{
+
 margin:20px;
+
 background:white;
-padding:15px;
-border-radius:16px;
+
+padding:20px;
+
+border-radius:20px;
+
 }
 
-input{
-width:90%;
-padding:12px;
-border:0;
+
+
+.search input{
+
+width:75%;
+
+padding:15px;
+
+border:none;
+
+background:#f3f4f6;
+
+border-radius:12px;
+
 font-size:16px;
+
 }
+
+
+
+.search button{
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:#111827;
+
+color:white;
+
+}
+
+
 
 .card{
+
 background:white;
+
 margin:20px;
-padding:20px;
-border-radius:18px;
-box-shadow:0 5px 20px #ddd;
+
+padding:25px;
+
+border-radius:20px;
+
+box-shadow:
+0 5px 20px #ddd;
+
 }
+
+
+
+.card h2{
+
+margin-top:0;
+
+}
+
+
 
 .price{
-font-size:30px;
+
+font-size:32px;
+
 color:#ef4444;
+
 font-weight:bold;
+
+margin:20px 0;
+
 }
+
+
 
 .btn{
-background:#111827;
-color:white;
-padding:12px;
-border-radius:12px;
+
 display:inline-block;
+
+background:#111827;
+
+color:white;
+
+padding:12px 20px;
+
+border-radius:15px;
+
 }
 
-.nav{
-position:fixed;
-bottom:0;
-width:100%;
-background:white;
-padding:15px;
-display:flex;
-justify-content:space-around;
+
+
+.result{
+
+margin-top:15px;
+
+color:#555;
+
 }
+
+
+
+.nav{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+background:white;
+
+display:flex;
+
+justify-content:space-around;
+
+padding:18px;
+
+box-shadow:
+0 -3px 10px #ddd;
+
+}
+
+
+
+.nav span{
+
+font-size:16px;
+
+}
+
 
 </style>
 
 </head>
+
 
 
 <body>
@@ -78,100 +221,224 @@ justify-content:space-around;
 
 <header>
 
-<h1>🚀 SaveGo AI</h1>
+<h1>
+🚀 SaveGo AI
+</h1>
 
-<p>智能比价与购物决策平台 V6.2</p>
+
+<p>
+智能比价与购物决策平台 V6.2
+</p>
+
 
 </header>
 
 
 
+
 <div class="search">
 
-<input placeholder="搜索商品，例如 手机、电脑">
+
+<input 
+id="searchInput"
+placeholder="搜索商品，例如 手机、电脑">
+
+
+<button onclick="searchProduct()">
+
+搜索
+
+</button>
+
+
+<div id="result" class="result">
+
+</div>
+
 
 </div>
 
 
 
+
+
 <div class="card">
 
-<h2>📱 iPhone 16 Pro</h2>
 
-<p>SaveGo评分：92分</p>
+<h2>
+📱 iPhone 16 Pro
+</h2>
+
+
+<p>
+SaveGo评分：92分
+</p>
+
 
 <div class="price">
+
 ¥7499
+
 </div>
 
+
 <p>
-最低价格：3个平台比较
+
+最低价格：
+3个平台比较
+
 </p>
 
 
 <div class="btn">
+
 ❤️ 收藏
+
 </div>
 
 
 </div>
+
+
 
 
 
 
 <div class="card">
 
-<h2>🤖 AI购物助手</h2>
+
+<h2>
+
+🤖 AI购物助手
+
+</h2>
+
 
 <p>
+
 输入预算和需求，
 AI帮助选择最佳商品。
+
 </p>
 
 
+
 <div class="btn">
+
 开始分析
+
 </div>
 
 
 </div>
+
+
+
+
 
 
 
 <div class="card">
 
-<h2>📉 降价提醒</h2>
+
+<h2>
+
+📉 降价提醒
+
+</h2>
+
 
 <p>
-目标价格：¥6999
+
+目标价格：
+¥6999
+
 </p>
 
+
 <p>
-状态：监控中
+
+状态：
+监控中
+
 </p>
+
 
 </div>
+
+
+
 
 
 
 <div class="nav">
 
-<span>首页</span>
 
-<span>搜索</span>
+<span>
+首页
+</span>
 
-<span>AI</span>
 
-<span>我的</span>
+<span>
+搜索
+</span>
+
+
+<span>
+AI
+</span>
+
+
+<span>
+我的
+</span>
+
 
 </div>
 
 
-<script src="app.js"></script>
 
-</div>
 
-<script src="app.js"></script>
+
+
+<script>
+
+
+function searchProduct(){
+
+
+let keyword =
+document.getElementById("searchInput").value;
+
+
+
+if(keyword==""){
+
+
+document.getElementById("result").innerHTML=
+"请输入商品名称";
+
+
+return;
+
+
+}
+
+
+
+document.getElementById("result").innerHTML=
+
+"正在分析商品："+keyword+"<br>正在比较价格...";
+
+
+}
+
+
+</script>
+
+
+
+
 </body>
 
 </html>
