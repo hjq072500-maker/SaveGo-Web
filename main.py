@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
 import uvicorn
-
+from products import products
 
 # =========================
 # SaveGo AI V7.0
@@ -78,28 +78,56 @@ def search_product(
         request: ProductRequest
 ):
 
-    keyword = request.keyword
+    keyword = request.keyword.lower()
 
 
-    # 后续接入淘宝/京东/API
-    products = [
+    result = []
 
-        {
-            "name":keyword,
-            "price":"暂无价格",
-            "platform":"SaveGo AI"
+
+    for item in products:
+
+        if keyword in item["name"].lower():
+
+            result.append(item)
+
+
+
+    if not result:
+
+        return {
+
+            "keyword": keyword,
+
+            "count": 0,
+
+            "products": []
+
         }
 
-    ]
+
+
+    result.sort(
+        key=lambda x:x["price"]
+    )
 
 
     return {
 
-        "keyword":keyword,
-        "count":len(products),
-        "products":products
+        "keyword": request.keyword,
+
+        "count": len(result),
+
+        "best_price": result[0]["price"],
+
+        "products": result
 
     }
+    
+
+
+    
+
+        
 
 
 
