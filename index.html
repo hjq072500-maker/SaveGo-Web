@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SaveGo V6.2 数据智能版</title>
+<title>SaveGo V7.0 AI购物生态</title>
 
 
 <style>
@@ -19,13 +19,13 @@ box-sizing:border-box;
 
 body{
 
+margin:0;
+
 font-family:
 Arial,
 "Microsoft YaHei";
 
-background:#f3f6fb;
-
-margin:0;
+background:#f4f7fb;
 
 padding-bottom:80px;
 
@@ -35,21 +35,21 @@ padding-bottom:80px;
 
 header{
 
-background:#111827;
+background:
+linear-gradient(135deg,#111827,#2563eb);
 
 color:white;
 
-padding:35px 20px;
+padding:40px 20px;
 
 text-align:center;
 
 }
 
 
-
 header h1{
 
-font-size:32px;
+font-size:36px;
 
 margin:10px;
 
@@ -65,31 +65,31 @@ font-size:18px;
 
 
 
-.search{
 
-margin:20px;
+
+.search-box{
 
 background:white;
 
+margin:20px;
+
 padding:20px;
 
-border-radius:20px;
+border-radius:25px;
 
 }
 
 
 
-.search input{
+.search-box input{
 
 width:75%;
 
 padding:15px;
 
-border:none;
+border-radius:15px;
 
-background:#f3f4f6;
-
-border-radius:12px;
+border:1px solid #ddd;
 
 font-size:16px;
 
@@ -97,19 +97,21 @@ font-size:16px;
 
 
 
-.search button{
+.search-box button{
 
 padding:15px;
 
 border:none;
 
-border-radius:12px;
+border-radius:15px;
 
-background:#111827;
+background:#2563eb;
 
 color:white;
 
 }
+
+
 
 
 
@@ -121,18 +123,22 @@ margin:20px;
 
 padding:25px;
 
-border-radius:20px;
+border-radius:25px;
 
 box-shadow:
-0 5px 20px #ddd;
+0 10px 30px rgba(0,0,0,.08);
 
 }
 
 
 
-.card h2{
+.score{
 
-margin-top:0;
+color:#2563eb;
+
+font-size:22px;
+
+font-weight:bold;
 
 }
 
@@ -140,41 +146,60 @@ margin-top:0;
 
 .price{
 
-font-size:32px;
+font-size:34px;
 
 color:#ef4444;
 
 font-weight:bold;
 
-margin:20px 0;
+}
+
+
+
+
+.platform{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:10px;
+
+background:#f8fafc;
+
+margin-top:10px;
+
+border-radius:10px;
 
 }
 
 
 
-.btn{
-
-display:inline-block;
+.ai{
 
 background:#111827;
 
 color:white;
 
+}
+
+
+
+.button{
+
+display:inline-block;
+
+background:#2563eb;
+
+color:white;
+
 padding:12px 20px;
 
-border-radius:15px;
+border-radius:20px;
 
 }
 
 
-
-.result{
-
-margin-top:15px;
-
-color:#555;
-
-}
 
 
 
@@ -197,20 +222,13 @@ justify-content:space-around;
 padding:18px;
 
 box-shadow:
-0 -3px 10px #ddd;
-
-}
-
-
-
-.nav span{
-
-font-size:16px;
+0 -5px 20px #ddd;
 
 }
 
 
 </style>
+
 
 </head>
 
@@ -219,7 +237,9 @@ font-size:16px;
 <body>
 
 
+
 <header>
+
 
 <h1>
 🚀 SaveGo AI
@@ -227,7 +247,12 @@ font-size:16px;
 
 
 <p>
-智能比价与购物决策平台 V6.2
+V7.0 智能购物生态平台
+</p>
+
+
+<p>
+比价 · 预测 · AI决策
 </p>
 
 
@@ -236,27 +261,30 @@ font-size:16px;
 
 
 
-<div class="search">
+
+<div class="search-box">
 
 
-<input 
-id="searchInput"
-placeholder="搜索商品，例如 手机、电脑">
+<input
+id="keyword"
+placeholder="搜索商品，例如 iPhone 16 Pro">
 
 
-<button onclick="searchProduct()">
+<button onclick="search()">
 
 搜索
 
 </button>
 
 
-<div id="result" class="result">
-
 </div>
 
 
-</div>
+
+
+
+
+<div id="products">
 
 
 
@@ -270,60 +298,93 @@ placeholder="搜索商品，例如 手机、电脑">
 </h2>
 
 
-<p>
-SaveGo评分：92分
-</p>
+<div class="score">
+
+SaveGo评分 92
+
+</div>
 
 
 <div class="price">
 
+¥7399
+
+</div>
+
+
+<div class="platform">
+
+<span>
+淘宝
+</span>
+
+<span>
+¥7399
+</span>
+
+</div>
+
+
+
+<div class="platform">
+
+<span>
+京东
+</span>
+
+<span>
 ¥7499
-
-</div>
-
-
-<p>
-
-最低价格：
-3个平台比较
-
-</p>
-
-
-<div class="btn">
-
-❤️ 收藏
-
-</div>
-
+</span>
 
 </div>
 
 
 
+<div class="platform">
+
+<span>
+亚马逊
+</span>
+
+<span>
+¥7599
+</span>
+
+</div>
 
 
 
-<div class="card">
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card ai">
 
 
 <h2>
-
 🤖 AI购物助手
-
 </h2>
 
 
 <p>
 
-输入预算和需求，
-AI帮助选择最佳商品。
+告诉我预算和需求，
+我帮你选择商品。
 
 </p>
 
 
-
-<div class="btn">
+<div class="button">
 
 开始分析
 
@@ -337,34 +398,30 @@ AI帮助选择最佳商品。
 
 
 
-
 <div class="card">
 
 
 <h2>
-
-📉 降价提醒
-
+📊 价格趋势
 </h2>
 
 
 <p>
 
-目标价格：
-¥6999
+30天价格预测：
 
 </p>
 
 
-<p>
+<h3>
 
-状态：
-监控中
+可能下降 5%
 
-</p>
+</h3>
 
 
 </div>
+
 
 
 
@@ -399,43 +456,25 @@ AI
 
 
 
-
-
 <script>
 
 
-function searchProduct(){
+function search(){
 
 
-let keyword =
-document.getElementById("searchInput").value;
+let key =
+document.getElementById("keyword").value;
 
 
-
-if(keyword==""){
-
-
-document.getElementById("result").innerHTML=
-"请输入商品名称";
-
-
-return;
-
-
-}
-
-
-
-document.getElementById("result").innerHTML=
-
-"正在分析商品："+keyword+"<br>正在比较价格...";
+alert(
+"正在搜索："+key
+);
 
 
 }
 
 
 </script>
-
 
 
 
