@@ -1,3 +1,5 @@
+import os
+from openai import OpenAI
 from auth import (
     create_user,
     login_user
@@ -443,3 +445,6 @@ def login(
         "login":success
 
     }
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY")
+)
