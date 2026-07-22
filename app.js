@@ -1,60 +1,120 @@
-// SaveGo V7.0 AI Shopping Engine
+// ===================================
+// SaveGo AI V7.0 前后端连接系统
+// ===================================
 
 
-// 商品数据库（V7测试数据）
-
-const products = [
-
-{
-name:"iPhone 16 Pro",
-category:"手机",
-price:7399,
-score:92,
-platform:[
-"淘宝 ¥7399",
-"京东 ¥7499",
-"亚马逊 ¥7599"
-]
-},
+// 后端API地址
+// 本地测试：
+const API_URL = "http://127.0.0.1:8000";
 
 
-{
-name:"MacBook Air M4",
-category:"电脑",
-price:8999,
-score:95,
-platform:[
-"苹果官网 ¥8999",
-"京东 ¥8899",
-"淘宝 ¥8799"
-]
-},
+// 如果以后部署服务器，把上面改成：
+// const API_URL = "https://你的后端地址";
 
 
-{
-name:"小米15",
-category:"手机",
-price:3999,
-score:88,
-platform:[
-"小米商城 ¥3999",
-"京东 ¥4099",
-"淘宝 ¥3899"
-]
+
+
+// ================================
+// 商品搜索
+// ================================
+
+async function search(){
+
+
+    let keyword = 
+    document.getElementById("keyword").value;
+
+
+
+    if(keyword.trim()==""){
+
+
+        alert("请输入商品名称");
+
+        return;
+
+    }
+
+
+
+    let box =
+    document.getElementById("products");
+
+
+
+    box.innerHTML = `
+
+    <div class="card">
+
+    🔍 正在搜索商品...
+
+    </div>
+
+    `;
+
+
+
+    try{
+
+
+        let response =
+        await fetch(
+        API_URL +
+        "/search?keyword="
+        +
+        encodeURIComponent(keyword)
+        );
+
+
+
+        let data =
+        await response.json();
+
+
+
+        showProducts(data.data);
+
+
+
+    }
+
+    catch(error){
+
+
+        box.innerHTML = `
+
+        <div class="card">
+
+        ❌ 后端连接失败
+
+        <br>
+
+        请检查API服务器是否启动
+
+        </div>
+
+        `;
+
+
+        console.log(error);
+
+
+    }
+
+
+
 }
 
-];
 
 
 
 
-// 商品搜索
+// ================================
+// 显示商品
+// ================================
 
-function search(){
 
-
-let keyword =
-document.getElementById("keyword").value;
+function showProducts(products){
 
 
 
@@ -63,33 +123,14 @@ document.getElementById("products");
 
 
 
-let result =
-products.filter(item=>
-
-
-item.name.includes(keyword)
-||
-item.category.includes(keyword)
-
-
-);
-
-
-
-if(result.length===0){
+if(!products || products.length===0){
 
 
 box.innerHTML=`
 
 <div class="card">
 
-<h2>
 没有找到商品
-</h2>
-
-<p>
-AI正在扩大搜索范围...
-</p>
 
 </div>
 
@@ -102,12 +143,11 @@ return;
 
 
 
-
 box.innerHTML="";
 
 
 
-result.forEach(item=>{
+products.forEach(item=>{
 
 
 box.innerHTML += `
@@ -117,8 +157,9 @@ box.innerHTML += `
 
 
 <h2>
-${item.name}
+📱 ${item.name}
 </h2>
+
 
 
 <div class="score">
@@ -138,39 +179,24 @@ ${item.score}
 
 
 
-<h3>
-价格比较
-</h3>
+<p>
 
+平台：
 
-${
+${item.platform}
 
-item.platform.map(
-p=>`
-
-<div class="platform">
-
-${p}
-
-</div>
-
-`
-).join("")
-
-}
+</p>
 
 
 
-<br>
-
-
-<button
+<button 
 class="button"
 onclick="favorite('${item.name}')">
 
 ❤️ 收藏
 
 </button>
+
 
 
 </div>
@@ -186,7 +212,11 @@ onclick="favorite('${item.name}')">
 
 
 
-// 收藏系统
+
+
+// ================================
+// 收藏功能
+// ================================
 
 
 function favorite(name){
@@ -202,9 +232,11 @@ localStorage.getItem(
 )
 
 ||
+
 "[]"
 
 );
+
 
 
 
@@ -230,7 +262,8 @@ JSON.stringify(favorites)
 
 alert(
 
-name+" 已加入收藏"
+name+
+" 已收藏"
 
 );
 
@@ -240,109 +273,80 @@ name+" 已加入收藏"
 
 
 
-// AI购物助手
 
 
-function aiRecommend(){
+// ================================
+// AI推荐
+// ================================
 
 
-
-let budget = prompt(
-
-"请输入你的预算，例如：5000"
-
-);
+async function aiRecommend(){
 
 
 
-if(!budget){
-
-return;
-
-}
+try{
 
 
+let response =
 
+await fetch(
 
-let result;
-
-
-
-if(budget>=7000){
-
-
-result=
-"推荐：iPhone 16 Pro 或 MacBook Air M4";
-
-
-}
-
-else if(budget>=4000){
-
-
-result=
-"推荐：小米15 或 中端旗舰手机";
-
-
-}
-
-else{
-
-
-result=
-"推荐：高性价比入门产品";
-
-
-}
-
-
-
-
-alert(
-
-"SaveGo AI分析结果：\n\n"
-
-+result
+API_URL+
+"/recommend"
 
 );
 
-
-
-}
-
-
-
-
-
-// 查看收藏
-
-
-function showFavorites(){
 
 
 let data =
 
-JSON.parse(
+await response.json();
 
-localStorage.getItem(
-"savego_favorites"
-)
 
-||
-"[]"
 
-);
+let text =
 
+"SaveGo AI推荐：\n\n";
+
+
+
+data.forEach(item=>{
+
+
+text +=
+
+item.name
++
+" 评分:"
++
+item.score
++
+"\n";
+
+
+});
+
+
+
+alert(text);
+
+
+
+}
+
+
+
+catch(error){
 
 
 alert(
 
-"我的收藏：\n"
-
-+
-data.join("\n")
+"AI服务暂时无法连接"
 
 );
+
+
+}
 
 
 }
