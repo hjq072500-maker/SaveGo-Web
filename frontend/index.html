@@ -1,13 +1,18 @@
 <!DOCTYPE html>
+
 <html>
 
 <head>
 
 <meta charset="UTF-8">
 
-<title>SaveGo AI</title>
+<title>
+SaveGo AI
+</title>
+
 
 <link rel="stylesheet" href="style.css">
+
 
 </head>
 
@@ -15,26 +20,57 @@
 <body>
 
 
-<header>
+<nav>
+
+<div class="logo">
+SaveGo AI
+</div>
+
+
+<div>
+
+<a href="login.html">
+登录
+</a>
+
+
+<a href="register.html">
+注册
+</a>
+
+
+<a href="ai_chat.html">
+AI助手
+</a>
+
+</div>
+
+
+</nav>
+
+
+
+
+<section class="hero">
+
 
 <h1>
-SaveGo AI
+AI帮你做购物决策
 </h1>
 
+
 <p>
-你的智能购物决策助手
+搜索商品、分析价格、智能推荐
 </p>
 
-</header>
 
 
+<div class="search-box">
 
-<section class="search-box">
 
-
-<input 
+<input
 id="keyword"
-placeholder="输入你想购买的商品"
+placeholder="例如：5000元手机"
 />
 
 
@@ -45,26 +81,24 @@ placeholder="预算"
 
 
 <button onclick="searchAI()">
-AI推荐
+
+开始分析
+
 </button>
 
 
+</div>
+
+
 </section>
+
 
 
 
 <section id="result">
 
-
 </section>
 
-
-
-<footer>
-
-SaveGo AI © 2026
-
-</footer>
 
 
 
@@ -72,6 +106,5 @@ SaveGo AI © 2026
 
 
 </body>
-
 
 </html>
