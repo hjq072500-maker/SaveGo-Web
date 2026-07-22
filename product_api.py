@@ -1,70 +1,40 @@
-# SaveGo AI V7.1
-# 商品数据接口层
+# =================================
+# SaveGo AI V7.0
+# Product Database
+# =================================
 
 
-def search_products(keyword):
+products = [
 
-    """
-    商品搜索接口
-    后续可以连接:
-    京东API
-    淘宝开放平台
-    亚马逊API
-    """
-
-    products = [
-
-        {
-            "name": keyword,
-            "platform": "京东",
-            "price": 6999,
-            "score": 92
-        },
-
-        {
-            "name": keyword,
-            "platform": "淘宝",
-            "price": 7199,
-            "score": 88
-        },
-
-        {
-            "name": keyword,
-            "platform": "拼多多",
-            "price": 6899,
-            "score": 90
-        }
-
-    ]
+    {
+        "name":"MacBook Air M4",
+        "platform":"Apple",
+        "price":999,
+        "url":"https://apple.com"
+    },
 
 
-    return products
+    {
+        "name":"MacBook Air M4",
+        "platform":"Amazon",
+        "price":949,
+        "url":"https://amazon.com"
+    },
 
 
-
-def analyze_products(products):
-
-    """
-    AI评分模块
-    """
-
-    # 按价格排序
-
-    products.sort(
-        key=lambda x:x["price"]
-    )
+    {
+        "name":"MacBook Air M4",
+        "platform":"Best Buy",
+        "price":899,
+        "url":"https://bestbuy.com"
+    },
 
 
-    best = products[0]
-
-
-    return {
-
-        "best_choice":best,
-
-        "all_products":products,
-
-        "advice":
-        "综合价格和评分，推荐最低价商品"
-
+    {
+        "name":"iPhone 17 Pro",
+        "platform":"Apple",
+        "price":1199,
+        "url":"https://apple.com"
     }
+
+]
