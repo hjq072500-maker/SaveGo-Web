@@ -1,3 +1,7 @@
+from auth import (
+    create_user,
+    login_user
+)
 from database import (
     init_db,
     add_favorite,
@@ -397,5 +401,45 @@ def favorites(username:str):
         "favorites":
 
         get_favorites(username)
+
+    }
+class UserRequest(BaseModel):
+
+    username:str
+
+    password:str
+
+
+
+@app.post("/register")
+def register(
+    req:UserRequest
+):
+
+    success = create_user(
+        req.username,
+        req.password
+    )
+
+
+    return {
+
+        "success":success
+
+    }
+@app.post("/login")
+def login(
+    req:UserRequest
+):
+
+    success = login_user(
+        req.username,
+        req.password
+    )
+
+
+    return {
+
+        "login":success
 
     }
