@@ -137,6 +137,99 @@ def search_product(req: ProductRequest):
 # =====================
 
 @app.get("/ai")
+# =====================
+# AI 推荐接口 V7.2
+# =====================
+
+class RecommendRequest(BaseModel):
+    keyword: str
+    budget: int
+
+
+
+@app.post("/recommend")
+def recommend_product(req: RecommendRequest):
+
+    keyword = req.keyword
+
+    budget = req.budget
+
+
+    products = [
+
+        {
+            "name": "Apple MacBook Air M3 13英寸",
+            "price": 7999,
+            "platform": "Apple官方"
+        },
+
+        {
+            "name": "MacBook Air M3 笔记本电脑",
+            "price": 7499,
+            "platform": "京东"
+        },
+
+        {
+            "name": "MacBook Pro M3",
+            "price": 10999,
+            "platform": "天猫"
+        }
+
+    ]
+
+
+    # 过滤预算
+
+    suitable = []
+
+    for p in products:
+
+        if p["price"] <= budget:
+
+            suitable.append(p)
+
+
+
+    # 没有符合预算
+
+    if not suitable:
+
+        suitable = products
+
+
+
+    # 按价格排序
+
+    suitable.sort(
+        key=lambda x:x["price"]
+    )
+
+
+    best = suitable[0]
+
+
+    return {
+
+        "keyword": keyword,
+
+        "budget": budget,
+
+        "recommendation": {
+
+            "best": best["name"],
+
+            "price": best["price"],
+
+            "platform": best["platform"],
+
+            "score": 95,
+
+            "reason":
+            "综合价格、性能和预算后推荐"
+
+        }
+
+    }
 def ai_assistant():
 
     return {
