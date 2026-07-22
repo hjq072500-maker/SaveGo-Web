@@ -191,3 +191,204 @@ async function askAI(){
 
 
 }
+// =======================
+// 用户注册
+// =======================
+
+
+async function register(){
+
+
+let username =
+document.getElementById(
+"username"
+).value;
+
+
+let password =
+document.getElementById(
+"password"
+).value;
+
+
+
+let res =
+await fetch(
+API+"/register",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+
+body:JSON.stringify({
+
+username,
+
+password
+
+})
+
+});
+
+
+let data =
+await res.json();
+
+
+alert(
+data.success
+?
+"注册成功"
+:
+"注册失败"
+);
+
+
+}
+
+
+
+// =======================
+// 用户登录
+// =======================
+
+
+async function login(){
+
+
+let username =
+document.getElementById(
+"username"
+).value;
+
+
+let password =
+document.getElementById(
+"password"
+).value;
+
+
+
+let res =
+await fetch(
+API+"/login",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+
+body:JSON.stringify({
+
+username,
+
+password
+
+})
+
+});
+
+
+let data =
+await res.json();
+
+
+
+if(data.login){
+
+
+localStorage.setItem(
+"username",
+username
+);
+
+
+location.href=
+"user.html";
+
+
+}
+
+else{
+
+
+alert(
+"账号或密码错误"
+);
+
+}
+
+
+}
+
+
+
+
+
+// =======================
+// 收藏列表
+// =======================
+
+
+async function loadFavorites(){
+
+
+let username =
+localStorage.getItem(
+"username"
+);
+
+
+
+let res =
+await fetch(
+
+API+
+"/favorites/"
++
+username
+
+);
+
+
+
+let data =
+await res.json();
+
+
+
+document.getElementById(
+"favorites"
+).innerHTML=
+
+
+data.favorites
+.map(
+
+item=>
+
+`
+<div class="card">
+
+<h3>
+${item}
+</h3>
+
+</div>
+
+`
+
+)
+
+.join("");
+
+}
