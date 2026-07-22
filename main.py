@@ -1,3 +1,9 @@
+from database import (
+    init_db,
+    add_favorite,
+    get_favorites,
+    add_history
+)
 from ai_engine import generate_advice
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -9,7 +15,7 @@ app = FastAPI(
     description="智能比价购物助手",
     version="0.1.1"
 )
-
+init_db()
 
 # =====================
 # 数据模型
@@ -349,5 +355,47 @@ def ai_decision(req: ProductRequest):
 
         "AI_result":advice
 
+
+    }
+class FavoriteRequest(BaseModel):
+
+    username:str
+
+    product:str
+
+
+
+@app.post("/favorite")
+def favorite(
+    req:FavoriteRequest
+):
+
+    add_favorite(
+
+        req.username,
+
+        req.product
+
+    )
+
+
+    return {
+
+        "message":"收藏成功",
+
+        "product":req.product
+
+    }
+@app.get("/favorites/{username}")
+def favorites(username:str):
+
+
+    return {
+
+        "username":username,
+
+        "favorites":
+
+        get_favorites(username)
 
     }
