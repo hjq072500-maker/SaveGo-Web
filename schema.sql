@@ -1,0 +1,16 @@
+CREATE TABLE users(
+ id INT PRIMARY KEY AUTO_INCREMENT,
+ username VARCHAR(50)
+);
+
+CREATE TABLE products(
+ id INT PRIMARY KEY AUTO_INCREMENT,
+ name VARCHAR(200),
+ price FLOAT
+);
+
+CREATE TABLE price_history(
+ id INT PRIMARY KEY AUTO_INCREMENT,
+ product_id INT,
+ price FLOAT
+);
