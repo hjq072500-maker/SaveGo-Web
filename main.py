@@ -1,3 +1,4 @@
+from ai_engine import generate_advice
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
@@ -274,5 +275,79 @@ def product_analysis(keyword: str):
         "keyword": keyword,
 
         "analysis": analysis
+
+    }
+# =====================
+# AI决策接口 V7.4
+# =====================
+
+
+@app.post("/decision")
+def ai_decision(req: ProductRequest):
+
+
+    keyword=req.keyword.lower()
+
+
+    products_db = [
+
+        {
+            "name":"Apple MacBook Air M3",
+            "price":7999,
+            "platform":"Apple官方"
+        },
+
+
+        {
+            "name":"MacBook Air M3",
+            "price":7499,
+            "platform":"京东"
+        },
+
+
+        {
+            "name":"MacBook Pro M3",
+            "price":10999,
+            "platform":"天猫"
+        }
+
+    ]
+
+
+    matched=[]
+
+
+    for item in products_db:
+
+        if keyword in item["name"].lower():
+
+            matched.append(item)
+
+
+
+    if not matched:
+
+        return {
+
+            "message":"没有找到相关商品"
+
+        }
+
+
+
+    advice = generate_advice(
+
+        matched
+
+    )
+
+
+    return {
+
+
+        "keyword":req.keyword,
+
+        "AI_result":advice
+
 
     }
