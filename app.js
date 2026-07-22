@@ -1,85 +1,193 @@
+// =================================
+// SaveGo AI V7.0 Frontend API
+// =================================
 
-// SaveGo AI V7.0 Frontend
 
-const API_URL = "https://savego-ai-api.onrender.com";
+// 后端地址
+const API_URL = 
+"https://savego-ai-api.onrender.com";
 
 
+
+// ================================
 // 商品搜索
+// ================================
+
 async function searchProduct(){
 
-    let input = document.querySelector("input");
+    const input =
+    document.getElementById(
+        "keyword"
+    );
 
-    let keyword = input.value;
+
+    const result =
+    document.getElementById(
+        "result"
+    );
+
+
+    const keyword =
+    input.value.trim();
+
 
     if(!keyword){
-        alert("请输入商品");
+
+        result.innerHTML =
+        "请输入商品名称";
+
         return;
     }
 
 
+
+    result.innerHTML =
+    "正在搜索...";
+
+
+
     try{
 
-        let res = await fetch(
+
+        const response =
+        await fetch(
             API_URL + "/search",
             {
+
                 method:"POST",
+
                 headers:{
-                    "Content-Type":"application/json"
+                    "Content-Type":
+                    "application/json"
                 },
-                body:JSON.stringify({
-                    product:keyword
+
+
+                body:
+                JSON.stringify({
+
+                    keyword:keyword
+
                 })
+
             }
         );
 
 
-        let data = await res.json();
+
+        const data =
+        await response.json();
 
 
-        alert(
-            "AI分析结果:\n\n"+
-            JSON.stringify(data,null,2)
+
+        let html =
+        "<h3>搜索结果</h3>";
+
+
+
+        data.products.forEach(
+            item=>{
+
+
+                html += `
+
+                <div class="product">
+
+                <h4>
+                ${item.name}
+                </h4>
+
+
+                <p>
+                平台:
+                ${item.platform}
+                </p>
+
+
+                <p>
+                价格:
+                ${item.price}
+                </p>
+
+
+                </div>
+
+                `;
+
+
+            }
         );
 
 
-    }catch(error){
 
-        alert(
-            "连接服务器失败\n"+
-            error
-        );
+        result.innerHTML =
+        html;
+
+
 
     }
+
+    catch(error){
+
+        result.innerHTML =
+        "服务器连接失败";
+
+        console.log(error);
+
+    }
+
 
 }
 
 
 
-// AI助手
 
-async function aiAssistant(){
+
+// ================================
+// AI助手
+// ================================
+
+
+async function askAI(){
+
+
+    const box =
+    document.getElementById(
+        "ai-result"
+    );
+
+
+    box.innerHTML =
+    "AI思考中...";
+
+
 
     try{
 
-        let res = await fetch(
+
+        const response =
+        await fetch(
             API_URL+"/ai"
         );
 
 
-        let data = await res.json();
+        const data =
+        await response.json();
 
 
-        alert(
-            JSON.stringify(data,null,2)
-        );
+
+        box.innerHTML =
+        data.reply;
 
 
-    }catch(error){
-
-        alert(
-            "AI服务连接失败"
-        );
 
     }
+
+    catch(e){
+
+        box.innerHTML =
+        "AI服务连接失败";
+
+    }
+
 
 }
